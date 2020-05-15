@@ -21,6 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->enum('type', ['customer', 'seller'])->default('customer');
+            $table->string('stripe_customer_id')->nullable();
+            $table->string('stripe_connect_id')->nullable();
         });
     }
 
