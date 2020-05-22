@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\User;
+use App\Services\Stripe\Transaction;
 
 class ProductController extends Controller
 {
@@ -20,6 +22,20 @@ class ProductController extends Controller
     public function purchase(Request $request)
     {
 
+        $this->validate($request, [
+            'upc' => 'required'
+        ]);
+
+        $user = Auth::user();
+        $product = Product::where('upc', '=', $request->upc)->first();
+        if (is_null($product)) {
+            return back()->with('error', 'Product not found');
+        }
+
+        // Create a transaction
+        Transaction::create($user, $product);
+
+        return back()->with('success', 'You have bought the product');
     }
 
 
