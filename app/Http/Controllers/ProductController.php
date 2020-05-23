@@ -45,7 +45,23 @@ class ProductController extends Controller
 
      public function store(Request $request)
      {
+        $user = Auth::user();
+        $this->validate($request, [
+            'name' => 'required',
+            'price' => 'required'
+        ]);
 
+        $product = new Product();
+        $product->upc = Str::uuid();
+        $product->name = $request->name;
+        $product->seller_id = $user->id;
+
+        if ($request->has('description')) {
+            $product->image = $request->file('image')->store('images', ['disk' => 'public']);
+        }
+        $product->save();
+
+        return back()->with('success', 'Product created.');
      }
 
 }
