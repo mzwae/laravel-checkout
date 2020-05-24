@@ -64,4 +64,24 @@ class ProductController extends Controller
         return back()->with('success', 'Product created.');
      }
 
+     /**
+      * Add a new product view
+      */
+      public function add()
+      {
+          return view('product.add');
+      }
+
+      /**
+       * Edit a product
+       */
+      public function edit($id)
+    {
+        $product = Product::find($id);
+        if (is_null($product)) {
+            return back()->with('error', 'Product Not Found');
+        }
+        return view('product.edit');
+    }
+
 }
