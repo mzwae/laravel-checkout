@@ -10,7 +10,7 @@ class SellerController extends Controller
     public function create()
     {
         $user = Auth::user();
-        if (!is_null($use->stripe_connect_id)) {
+        if (!is_null($user->stripe_connect_id)) {
             return redirect()->route('stripe.login');
         }
         $session = request()->session()->getId();
