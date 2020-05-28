@@ -45,5 +45,9 @@ class Transaction
         $payment->fees_collected = $amount - $payout;
         $payment->save();
     }
-    
+
+    public static function toStripeFormat(float $amount)
+    {
+        return $amount * 100;
+    }
 }
