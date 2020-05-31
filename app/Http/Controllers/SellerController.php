@@ -45,7 +45,7 @@ class SellerController extends Controller
             'state' => 'required'
         ]);
 
-        $session = DB::table('session')->where('id', $request->state)->first();
+        $session = DB::table('sessions')->where('id', $request->state)->first();
         $data = Seller::create($request->code);
         User::find($session->user_id)->update(['stripe_connect_id' => $data->stripe_user_id]);
         return redirect()->route('products')->with('success', 'Account information has been saved.');
