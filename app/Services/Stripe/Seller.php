@@ -8,7 +8,7 @@ class Seller
     public static function create($code)
     {
         $client = new Client([
-            'base_uri' => 'https://connect.stripe.com/oauth/'
+            'base_uri' => 'https://connect.stripe.com/express/oauth/'
         ]);
 
         $request = $client->request("POST", "token", [
