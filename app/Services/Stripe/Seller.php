@@ -7,11 +7,9 @@ class Seller
 {
     public static function create($code)
     {
-        $client = new Client([
-            'base_uri' => 'https://connect.stripe.com/express/oauth/'
-        ]);
+        $client = new Client(['base_uri' => 'https://connect.stripe.com/express/oauth/']);
 
-        $request = $client->request("POST", "token", [
+        $response = $client->request("POST", "token", [
 
             'form_params' => [
                 'client_secret' => getenv('STRIPE_SECRET'),
@@ -20,6 +18,11 @@ class Seller
             ]
         ]);
 
+        echo "This is the request";
+        dd($response->getBody());
+        // dd($response->getStatusCode());
+        // dd($client);
+        // dd($code);
         return json_decode($request->getBody()->getContents());
     }
 }
